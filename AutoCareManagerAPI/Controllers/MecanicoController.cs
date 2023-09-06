@@ -33,6 +33,7 @@ namespace AutoCareManagerAPI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Post(Mecanico mecanico) {
+            mecanico.estado = true;
             await _context.Mecanico.AddAsync(mecanico);
 
             await _context.SaveChangesAsync();

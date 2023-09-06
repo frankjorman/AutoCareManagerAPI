@@ -9,5 +9,6 @@
         public string correoElectronico { get; set; }
         public string cargo { get; set; }
         public string especializacion { get; set; }
+        public bool estado { get; set; }
     }
 }
