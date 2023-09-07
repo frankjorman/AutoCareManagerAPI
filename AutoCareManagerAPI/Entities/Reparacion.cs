@@ -1,6 +1,6 @@
 ﻿namespace AutoCareManagerAPI.Entities
 {
-    public class Reparaciones
+    public class Reparacion
     {
         public int id { get; set; }
         public DateTime fecha { get; set; }

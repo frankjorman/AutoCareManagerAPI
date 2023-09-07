@@ -7,9 +7,9 @@ namespace AutoCareManagerAPI.Data
     {
         public AutoCareManagerAPIContext(DbContextOptions options) :base(options) { }
 
-        public DbSet<Mecanico> Mecanico { get; set; }
-        public DbSet<Reparaciones> Reparaciones { get; set; }
-        public DbSet<Vehiculo> Vehiculos { get; set; }
+        public DbSet<Empleado> empleado { get; set; }
+        public DbSet<Reparacion> reparacion { get; set; }
+        public DbSet<Vehiculo> vehiculo { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

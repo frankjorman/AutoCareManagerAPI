@@ -1,6 +1,6 @@
 ﻿namespace AutoCareManagerAPI.Entities
 {
-    public class Mecanico
+    public class Empleado
     {
         public int id { get; set; }
         public string nombre { get; set; }
