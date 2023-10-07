@@ -20,7 +20,6 @@ namespace AutoCareManagerAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Configuraciones
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Configuracion>>> GetConfiguracion()
         {
@@ -31,7 +30,6 @@ namespace AutoCareManagerAPI.Controllers
             return await _context.Configuracion.ToListAsync();
         }
 
-        // GET: api/Configuraciones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Configuracion>> GetConfiguracion(string id)
         {
@@ -49,8 +47,6 @@ namespace AutoCareManagerAPI.Controllers
             return configuracion;
         }
 
-        // PUT: api/Configuraciones/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutConfiguracion(string id, Configuracion configuracion)
         {
@@ -80,8 +76,6 @@ namespace AutoCareManagerAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Configuraciones
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Configuracion>> PostConfiguracion(Configuracion configuracion)
         {
@@ -109,7 +103,6 @@ namespace AutoCareManagerAPI.Controllers
             return CreatedAtAction("GetConfiguracion", new { id = configuracion.Codigo }, configuracion);
         }
 
-        // DELETE: api/Configuraciones/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfiguracion(string id)
         {
