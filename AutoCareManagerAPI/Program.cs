@@ -1,4 +1,5 @@
-using AutoCareManagerAPI.Data;
+
+using AutoCareManagerAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AutoCareManagerAPIContext>(options =>
+builder.Services.AddDbContext<AutoCareManagerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AutoCareManagerAPIContext"))
 );
 
