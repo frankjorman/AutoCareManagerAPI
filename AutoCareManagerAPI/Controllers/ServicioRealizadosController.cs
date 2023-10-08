@@ -20,7 +20,6 @@ namespace AutoCareManagerAPI.Controllers
             _context = context;
         }
 
-        // GET: api/ServicioRealizados
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ServicioRealizados>>> GetServicioRealizados()
         {

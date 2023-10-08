@@ -20,7 +20,6 @@ namespace AutoCareManagerAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Empleados
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleado()
         {
@@ -31,7 +30,6 @@ namespace AutoCareManagerAPI.Controllers
             return await _context.Empleado.ToListAsync();
         }
 
-        // GET: api/Empleados/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Empleado>> GetEmpleado(int id)
         {
@@ -49,8 +47,6 @@ namespace AutoCareManagerAPI.Controllers
             return empleado;
         }
 
-        // PUT: api/Empleados/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmpleado(int id, Empleado empleado)
         {
@@ -80,8 +76,6 @@ namespace AutoCareManagerAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Empleados
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Empleado>> PostEmpleado(Empleado empleado)
         {
@@ -95,7 +89,6 @@ namespace AutoCareManagerAPI.Controllers
             return CreatedAtAction("GetEmpleado", new { id = empleado.IdEmpleado }, empleado);
         }
 
-        // DELETE: api/Empleados/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmpleado(int id)
         {

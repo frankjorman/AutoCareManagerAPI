@@ -1,10 +1,11 @@
 ﻿using AutoCareManagerAPI.Entities;
+using AutoCareManagerAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutoCareManagerAPI.Data
 {
-    public class DConfiguraciones
+    public class DConfiguraciones : IDConfiguraciones
     {
         private readonly AutoCareManagerContext _context;
 
@@ -16,13 +17,13 @@ namespace AutoCareManagerAPI.Data
         [HttpGet]
         public async Task<IEnumerable<Configuracion>> GetConfiguracion()
         {
-            
+
             return await _context.Configuracion.ToListAsync();
         }
 
         public async Task<Configuracion> GetConfiguracion(int id)
         {
-            if (id==0)
+            if (id == 0)
             {
                 return null;
             }
@@ -45,11 +46,11 @@ namespace AutoCareManagerAPI.Data
 
             _context.Configuracion.Update(configuracion);
 
-            
-            var resultado =  await _context.SaveChangesAsync();
-            
 
-            return resultado==1?true:false;
+            var resultado = await _context.SaveChangesAsync();
+
+
+            return resultado == 1 ? true : false;
         }
 
 
@@ -62,9 +63,9 @@ namespace AutoCareManagerAPI.Data
 
             _context.Configuracion.Add(configuracion);
 
-            
+
             var resultado = await _context.SaveChangesAsync();
-            return resultado == 1?true:false;
+            return resultado == 1 ? true : false;
         }
 
         [HttpDelete("{id}")]
@@ -83,7 +84,7 @@ namespace AutoCareManagerAPI.Data
             _context.Configuracion.Remove(configuracion);
             var resultado = await _context.SaveChangesAsync();
 
-            return resultado==1?true :false;
+            return resultado == 1 ? true : false;
         }
 
         private bool ConfiguracionExists(string id)

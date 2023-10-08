@@ -20,7 +20,7 @@ namespace AutoCareManagerAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Vehiculos
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Vehiculo>>> GetVehiculo()
         {
@@ -31,7 +31,6 @@ namespace AutoCareManagerAPI.Controllers
             return await _context.Vehiculo.ToListAsync();
         }
 
-        // GET: api/Vehiculos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Vehiculo>> GetVehiculo(int id)
         {
@@ -49,8 +48,6 @@ namespace AutoCareManagerAPI.Controllers
             return vehiculo;
         }
 
-        // PUT: api/Vehiculos/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutVehiculo(int id, Vehiculo vehiculo)
         {
@@ -80,8 +77,6 @@ namespace AutoCareManagerAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Vehiculos
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Vehiculo>> PostVehiculo(Vehiculo vehiculo)
         {
@@ -95,7 +90,6 @@ namespace AutoCareManagerAPI.Controllers
             return CreatedAtAction("GetVehiculo", new { id = vehiculo.IdVehiculo }, vehiculo);
         }
 
-        // DELETE: api/Vehiculos/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehiculo(int id)
         {
