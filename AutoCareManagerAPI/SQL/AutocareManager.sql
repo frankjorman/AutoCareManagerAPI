@@ -1,4 +1,4 @@
-CREATE AutoCareManager;
+--CREATE DATABASE AutoCareManager;
 
 USE  AutoCareManager;
 
@@ -76,20 +76,46 @@ CREATE TABLE Vehiculo(
 	placa VARCHAR(50),
 )
 
+CREATE TABLE Respuesto(
+	idRespuesto INT  IDENTITY(1,1) PRIMARY KEY,
+	descripcion VARCHAR(250),
+	costo DECIMAL(10,2)
+)
+
 CREATE TABLE ServicioRealizados(
-	idServicioRealizados INT IDENTITY(1,1) PRIMARY KEY,
+	idServicioRealizado INT IDENTITY(1,1) PRIMARY KEY,
 	fecha DATETIME,
 	idVehiculo INT,
 	idCliente INT,
 	idServicio INT,
+	idRespuesto INT,
 	codigo VARCHAR(50)
 	FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
 	FOREIGN KEY (idVehiculo) REFERENCES Vehiculo(idVehiculo),
-	FOREIGN KEY (idServicio) REFERENCES Servicios(idSercicios)
+	FOREIGN KEY (idServicio) REFERENCES Servicios(idSercicios),
+	FOREIGN KEY (idRespuesto) REFERENCES Respuesto(idRespuesto)
 )
 
-CREATE TABLE Respuesto(
-	id INT  IDENTITY(1,1) PRIMARY KEY,
-	descripcion VARCHAR(250),
-	costo DECIMAL(10,2)
+
+
+
+CREATE TABLE Comprobante(
+	idComprobante INT IDENTITY(1,1) PRIMARY KEY,
+	idCliente INT NOT NULL,
+	idUsuario INT NOT NULL,
+	fecha datetime NOT NULL,
+	tipo varchar(50) NOT NULL,
+	
+	FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario),
+	FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente)
+)
+
+CREATE TABLE DetalleComprobante(
+	idDetalleComprobante INT IDENTITY(1,1) PRIMARY KEY,
+	idComprobante int NOT NULL,
+	idServicioRealizado int NOT NULL,
+	precio decimal(10,2)
+
+	FOREIGN KEY (idComprobante) REFERENCES Comprobante(idComprobante),
+	FOREIGN KEY (idServicioRealizado) REFERENCES ServicioRealizados(idServicioRealizado)
 )
