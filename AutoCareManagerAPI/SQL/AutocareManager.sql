@@ -87,3 +87,9 @@ CREATE TABLE ServicioRealizados(
 	FOREIGN KEY (idVehiculo) REFERENCES Vehiculo(idVehiculo),
 	FOREIGN KEY (idServicio) REFERENCES Servicios(idSercicios)
 )
+
+CREATE TABLE Respuesto(
+	id INT  IDENTITY(1,1) PRIMARY KEY,
+	descripcion VARCHAR(250),
+	costo DECIMAL(10,2)
+)
