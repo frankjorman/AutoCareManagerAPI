@@ -1,4 +1,4 @@
-CREATE DATABASE AutoCareManager;
+CREATE AutoCareManager;
 
 USE  AutoCareManager;
 
@@ -17,6 +17,7 @@ username VARCHAR(250) NOT NULL,
 password VARCHAR(250) NOT NULL,
 rol VARCHAR(250) NOT NULL,
 idEmpleado int
+FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado)
 )
 
 INSERT INTO Usuario (username,password,rol,idEmpleado) VALUES('admin','admin','admin',1);
@@ -42,8 +43,7 @@ CREATE TABLE Servicios(
 	idSercicios INT IDENTITY(1,1) PRIMARY KEY,
 	nombre varchar(250),
 	codigo varchar(10),
-	tipo varchar(10),
-
+	tipo varchar(10)
 )
 
 INSERT INTO Servicios VALUES ('Mantenimiento Preventivo','MP','M')
@@ -81,6 +81,9 @@ CREATE TABLE ServicioRealizados(
 	fecha DATETIME,
 	idVehiculo INT,
 	idCliente INT,
-	Servicio INT,
+	idServicio INT,
 	codigo VARCHAR(50)
+	FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
+	FOREIGN KEY (idVehiculo) REFERENCES Vehiculo(idVehiculo),
+	FOREIGN KEY (idServicio) REFERENCES Servicios(idSercicios)
 )
