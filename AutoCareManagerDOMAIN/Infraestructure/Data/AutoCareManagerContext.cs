@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutoCareManagerDOMAIN.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AutoCareManagerAPI.Entities;
+namespace AutoCareManagerDOMAIN.Infraestructure.Data;
 
 public partial class AutoCareManagerContext : DbContext
 {

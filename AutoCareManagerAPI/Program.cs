@@ -1,5 +1,6 @@
-
-using AutoCareManagerAPI.Entities;
+using AutoCareManagerDOMAIN.Core.Interfaces;
+using AutoCareManagerDOMAIN.Infraestructure.Data;
+using AutoCareManagerDOMAIN.Infraestructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AutoCareManagerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AutoCareManagerAPIContext"))
 );
+
+builder
+    .Services
+    .AddTransient<IUsuariosRepository, UsuariosRepository>();
+
+builder
+    .Services
+    .AddTransient<IEmpleadosRepository, EmpleadosRepository>();
 
 var app = builder.Build();
 

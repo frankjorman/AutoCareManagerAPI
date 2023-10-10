@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoCareManagerAPI.Entities;
+using AutoCareManagerDOMAIN.Entities;
+using AutoCareManagerDOMAIN.Infraestructure.Data;
+using AutoCareManagerDOMAIN.Core.Interfaces;
 
 namespace AutoCareManagerAPI.Controllers
 {
@@ -14,20 +16,19 @@ namespace AutoCareManagerAPI.Controllers
     public class EmpleadosController : ControllerBase
     {
         private readonly AutoCareManagerContext _context;
+        private readonly IEmpleadosRepository _empleado;
 
-        public EmpleadosController(AutoCareManagerContext context)
+        public EmpleadosController(AutoCareManagerContext context, IEmpleadosRepository empleado)
         {
             _context = context;
+            _empleado = empleado;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleado()
         {
-          if (_context.Empleado == null)
-          {
-              return NotFound();
-          }
-            return await _context.Empleado.ToListAsync();
+            var resultado = await _empleado.GetEmpleado();
+            return Ok(resultado);
         }
 
         [HttpGet("{id}")]
@@ -106,11 +107,6 @@ namespace AutoCareManagerAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool EmpleadoExists(int id)
-        {
-            return (_context.Empleado?.Any(e => e.IdEmpleado == id)).GetValueOrDefault();
         }
     }
 }

@@ -3,13 +3,13 @@ using AutoCareManagerAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace AutoCareManagerAPI.Data
+namespace AutoCareManagerDOMAIN.Infraestructure.Repositories
 {
-    public class DConfiguraciones : IDConfiguraciones
+    public class ConfiguracionesRepository : IDConfiguraciones
     {
         private readonly AutoCareManagerContext _context;
 
-        public DConfiguraciones(AutoCareManagerContext context)
+        public ConfiguracionesRepository(AutoCareManagerContext context)
         {
             _context = context;
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AutoCareManagerAPI.Entities;
+namespace AutoCareManagerDOMAIN.Entities;
 
 public partial class Cliente
 {

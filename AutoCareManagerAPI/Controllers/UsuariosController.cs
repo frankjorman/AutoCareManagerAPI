@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoCareManagerAPI.Entities;
+using AutoCareManagerDOMAIN.Entities;
+using AutoCareManagerDOMAIN.Infraestructure.Data;
+using AutoCareManagerDOMAIN.Core.Interfaces;
 
 namespace AutoCareManagerAPI.Controllers
 {
@@ -14,103 +16,36 @@ namespace AutoCareManagerAPI.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly AutoCareManagerContext _context;
+        private readonly IUsuariosRepository _usuario;
 
-        public UsuariosController(AutoCareManagerContext context)
+        public UsuariosController(AutoCareManagerContext context, IUsuariosRepository usuario)
         {
             _context = context;
+            _usuario = usuario;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
+        [HttpPost("SignUp")]
+        public async Task<IActionResult> SignUp([FromBody] UserRegisterDTO userRegisterDTO)
         {
-          if (_context.Usuario == null)
-          {
-              return NotFound();
-          }
-            return await _context.Usuario.ToListAsync();
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
-        {
-          if (_context.Usuario == null)
-          {
-              return NotFound();
-          }
-            var usuario = await _context.Usuario.FindAsync(id);
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            return usuario;
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
-        {
-            if (id != usuario.IdUsuario)
-            {
+            var result = await _usuario.SignUp(userRegisterDTO);
+            if (!result)
                 return BadRequest();
-            }
 
-            _context.Entry(usuario).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UsuarioExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        [HttpPost("SignIn")]
+        public async Task<IActionResult>
+            SignIn([FromBody] UserAuthDTO userAuthDTO)
         {
-          if (_context.Usuario == null)
-          {
-              return Problem("Entity set 'AutoCareManagerContext.Usuario'  is null.");
-          }
-            _context.Usuario.Add(usuario);
-            await _context.SaveChangesAsync();
+            var result = await
+                _userService.SignIn(userAuthDTO);
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.IdUsuario }, usuario);
-        }
+            if (result == null)
+                return BadRequest("Credenciales inválidas");
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario(int id)
-        {
-            if (_context.Usuario == null)
-            {
-                return NotFound();
-            }
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
+            return Ok(result);
 
-            _context.Usuario.Remove(usuario);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UsuarioExists(int id)
-        {
-            return (_context.Usuario?.Any(e => e.IdUsuario == id)).GetValueOrDefault();
         }
     }
 }

@@ -3,13 +3,13 @@ using AutoCareManagerAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace AutoCareManagerAPI.Data
+namespace AutoCareManagerDOMAIN.Infraestructure.Repositories
 {
-    public class DClientes : IClientes
+    public class ClientesRepository : IClientes
     {
         private readonly AutoCareManagerContext _context;
 
-        public DClientes(AutoCareManagerContext context)
+        public ClientesRepository(AutoCareManagerContext context)
         {
             _context = context;
         }
@@ -92,6 +92,6 @@ namespace AutoCareManagerAPI.Data
             return (_context.Cliente?.Any(e => e.IdCliente == id)).GetValueOrDefault();
         }
 
-        
+
     }
 }

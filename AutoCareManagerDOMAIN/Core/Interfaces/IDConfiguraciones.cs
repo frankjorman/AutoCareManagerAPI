@@ -1,6 +1,6 @@
-﻿using AutoCareManagerAPI.Entities;
+﻿using AutoCareManagerDOMAIN.Entities;
 
-namespace AutoCareManagerAPI.Interfaces
+namespace AutoCareManagerDOMAIN.Interfaces
 {
     public interface IDConfiguraciones
     {

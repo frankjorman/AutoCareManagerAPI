@@ -1,7 +1,6 @@
-﻿using AutoCareManagerAPI.Entities;
-using Microsoft.AspNetCore.Mvc;
+﻿using AutoCareManagerDOMAIN.Entities;
 
-namespace AutoCareManagerAPI.Interfaces
+namespace AutoCareManagerDOMAIN.Interfaces
 {
     public interface IClientes
     {

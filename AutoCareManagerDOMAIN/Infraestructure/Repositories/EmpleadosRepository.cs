@@ -1,14 +1,15 @@
-﻿using AutoCareManagerAPI.Entities;
-using Microsoft.AspNetCore.Mvc;
+﻿using AutoCareManagerDOMAIN.Core.Interfaces;
+using AutoCareManagerDOMAIN.Entities;
+using AutoCareManagerDOMAIN.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AutoCareManagerAPI.Data
+namespace AutoCareManagerDOMAIN.Infraestructure.Repositories
 {
-    public class DEmpleados
+    public class EmpleadosRepository : IEmpleadosRepository
     {
         private readonly AutoCareManagerContext _context;
 
-        public DEmpleados(AutoCareManagerContext context)
+        public EmpleadosRepository(AutoCareManagerContext context)
         {
             _context = context;
         }
@@ -43,11 +44,11 @@ namespace AutoCareManagerAPI.Data
 
             _context.Empleado.Update(empleado);
 
-            
+
             var resultado = await _context.SaveChangesAsync();
 
 
-            return resultado == 1 ? true:false ;
+            return resultado == 1 ? true : false;
         }
 
         public async Task<bool> PostEmpleado(Empleado empleado)
@@ -59,10 +60,9 @@ namespace AutoCareManagerAPI.Data
             _context.Empleado.Add(empleado);
             var resultado = await _context.SaveChangesAsync();
 
-            return resultado==1?true:false;
+            return resultado == 1 ? true : false;
         }
 
-        [HttpDelete("{id}")]
         public async Task<bool> DeleteEmpleado(int id)
         {
             if (id == 0)
@@ -78,7 +78,7 @@ namespace AutoCareManagerAPI.Data
             _context.Empleado.Remove(empleado);
             var resultado = await _context.SaveChangesAsync();
 
-            return resultado == 1?true:false;
+            return resultado == 1 ? true : false;
         }
 
         private bool EmpleadoExists(int id)
