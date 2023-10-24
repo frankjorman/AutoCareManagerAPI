@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoCareManagerDOMAIN.Entities;
+using AutoCareManagerDOMAIN.Infraestructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoCareManagerAPI.Entities;
 
 namespace AutoCareManagerAPI.Controllers
 {
@@ -13,6 +14,7 @@ namespace AutoCareManagerAPI.Controllers
     [ApiController]
     public class ServiciosController : ControllerBase
     {
+        
         private readonly AutoCareManagerContext _context;
 
         public ServiciosController(AutoCareManagerContext context)
@@ -21,41 +23,57 @@ namespace AutoCareManagerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Servicios>>> GetServicios()
+        public async Task<ActionResult<IEnumerable<Servicios>>> GetServicio()
         {
-          if (_context.Servicios == null)
-          {
-              return NotFound();
-          }
+            if (_context.Servicios == null)
+            {
+                return NotFound();
+            }
             return await _context.Servicios.ToListAsync();
         }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Servicios>> GetServicios(int id)
+        [HttpGet]
+        [Route("GetServicioById/{id}")]
+        public async Task<ActionResult<Servicios>> GetServicioById(int id)
         {
-          if (_context.Servicios == null)
-          {
-              return NotFound();
-          }
-            var servicios = await _context.Servicios.FindAsync(id);
+            if (_context.Servicios == null)
+            {
+                return NotFound();
+            }
+            var servicio = await _context.Servicios.FindAsync(id);
 
-            if (servicios == null)
+            if (servicio == null)
             {
                 return NotFound();
             }
 
-            return servicios;
+            return servicio;
         }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutServicios(int id, Servicios servicios)
+        [HttpGet]
+        [Route("GetServicioByNombre/{nombre}")]
+        public async Task<ActionResult<Servicios>> GetServicioByNombre(string nombre)
         {
-            if (id != servicios.IdSercicios)
+            if (_context.Servicios == null)
+            {
+                return NotFound();
+            }
+            var servicio = await _context.Servicios.FindAsync(nombre);
+
+            if (servicio == null)
+            {
+                return NotFound();
+            }
+
+            return servicio;
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutServicio(int id, Servicios servicio)
+        {
+            if (id != servicio.IdServicios)
             {
                 return BadRequest();
             }
 
-            _context.Entry(servicios).State = EntityState.Modified;
+            _context.Entry(servicio).State = EntityState.Modified;
 
             try
             {
@@ -63,54 +81,32 @@ namespace AutoCareManagerAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ServiciosExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+               
             }
 
-            return NoContent();
+            return Ok(servicio);
         }
-
         [HttpPost]
-        public async Task<ActionResult<Servicios>> PostServicios(Servicios servicios)
+        public async Task<ActionResult<Servicios>> PostServicio(Servicios servicio)
         {
-          if (_context.Servicios == null)
-          {
-              return Problem("Entity set 'AutoCareManagerContext.Servicios'  is null.");
-          }
-            _context.Servicios.Add(servicios);
+            _context.Servicios.Add(servicio);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetServicios", new { id = servicios.IdSercicios }, servicios);
+            return CreatedAtAction("GetServicio", new { id = servicio.IdServicios }, servicio);
         }
-
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteServicios(int id)
+        public async Task<ActionResult<Servicios>> DeleteServicio(int id)
         {
-            if (_context.Servicios == null)
-            {
-                return NotFound();
-            }
-            var servicios = await _context.Servicios.FindAsync(id);
-            if (servicios == null)
+            var servicio = await _context.Servicios.FindAsync(id);
+            if (servicio == null)
             {
                 return NotFound();
             }
 
-            _context.Servicios.Remove(servicios);
+            _context.Servicios.Remove(servicio);
             await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
-
-        private bool ServiciosExists(int id)
-        {
-            return (_context.Servicios?.Any(e => e.IdSercicios == id)).GetValueOrDefault();
+            return servicio;
         }
     }
 }

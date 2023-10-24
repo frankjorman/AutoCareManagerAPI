@@ -14,11 +14,11 @@ namespace AutoCareManagerDOMAIN.Infraestructure.Repositories
             _context = context;
         }
 
-        public async Task<Usuario> SignIn(string username, string password)
+        public async Task<Usuario> SignIn(Usuario usuario)
         {
             var resultado = await _context
                 .Usuario
-                .Where(x => x.Username == username && x.Password == password)
+                .Where(x => x.Username == usuario.Username && x.Password == usuario.Password)
                 .FirstOrDefaultAsync();
             if (resultado == null)
             {

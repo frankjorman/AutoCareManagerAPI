@@ -1,5 +1,6 @@
-﻿using AutoCareManagerAPI.Entities;
-using AutoCareManagerAPI.Interfaces;
+﻿using AutoCareManagerDOMAIN.Entities;
+using AutoCareManagerDOMAIN.Infraestructure.Data;
+using AutoCareManagerDOMAIN.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

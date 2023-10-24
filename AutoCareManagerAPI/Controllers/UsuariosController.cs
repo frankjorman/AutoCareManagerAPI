@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoCareManagerDOMAIN.Entities;
 using AutoCareManagerDOMAIN.Infraestructure.Data;
 using AutoCareManagerDOMAIN.Core.Interfaces;
+using AutoCareManagerDOMAIN.Core.DTO;
 
 namespace AutoCareManagerAPI.Controllers
 {
@@ -25,9 +26,22 @@ namespace AutoCareManagerAPI.Controllers
         }
 
         [HttpPost("SignUp")]
-        public async Task<IActionResult> SignUp([FromBody] UserRegisterDTO userRegisterDTO)
+        public async Task<IActionResult> SignUp([FromBody] UsuarioRegisterDTO usuarioRegisterDTO)
         {
-            var result = await _usuario.SignUp(userRegisterDTO);
+            
+            var userExists = await _usuario.IsEmailRegistered(usuarioRegisterDTO.Username);
+
+            if(userExists) return BadRequest("El usuario ya existe");
+
+            var c = new Usuario
+            {
+                Username = usuarioRegisterDTO.Username,
+                Password = usuarioRegisterDTO.Password,
+                Rol = usuarioRegisterDTO.Rol,
+                IdEmpleado = usuarioRegisterDTO.IdEmpleado
+            };
+
+            var result = await _usuario.SignUp(c);
             if (!result)
                 return BadRequest();
 
@@ -35,11 +49,17 @@ namespace AutoCareManagerAPI.Controllers
         }
 
         [HttpPost("SignIn")]
-        public async Task<IActionResult>
-            SignIn([FromBody] UserAuthDTO userAuthDTO)
+        public async Task<IActionResult> SignIn([FromBody] UsuarioAuthDTO userAuthDTO)
         {
-            var result = await
-                _userService.SignIn(userAuthDTO);
+
+
+            var c = new Usuario
+            {
+                Username = userAuthDTO.Username,
+                Password = userAuthDTO.Password
+            };
+
+            var result = await _usuario.SignIn(c);
 
             if (result == null)
                 return BadRequest("Credenciales inválidas");

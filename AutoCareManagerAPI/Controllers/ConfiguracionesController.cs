@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoCareManagerDOMAIN.Entities;
+using AutoCareManagerDOMAIN.Infraestructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoCareManagerAPI.Entities;
 
 namespace AutoCareManagerAPI.Controllers
 {
@@ -42,7 +43,7 @@ namespace AutoCareManagerAPI.Controllers
             if (configuracion == null)
             {
                 return NotFound();
-            }
+            } 
 
             return configuracion;
         }

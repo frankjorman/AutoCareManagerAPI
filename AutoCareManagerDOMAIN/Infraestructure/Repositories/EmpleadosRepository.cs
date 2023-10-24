@@ -19,12 +19,13 @@ namespace AutoCareManagerDOMAIN.Infraestructure.Repositories
             return await _context.Empleado.ToListAsync();
         }
 
-        public async Task<Empleado> GetEmpleado(int id)
+        public async Task<Empleado> GetEmpleadoId(int id)
         {
             if (id == 0)
             {
                 return null;
             }
+
             var empleado = await _context.Empleado.FindAsync(id);
 
             if (empleado == null)
@@ -65,18 +66,18 @@ namespace AutoCareManagerDOMAIN.Infraestructure.Repositories
 
         public async Task<bool> DeleteEmpleado(int id)
         {
-            if (id == 0)
-            {
-                return false;
-            }
+
             var empleado = await _context.Empleado.FindAsync(id);
+
             if (empleado == null)
             {
                 return false;
             }
 
-            _context.Empleado.Remove(empleado);
+            empleado.Estado = false;
+            _context.Empleado.Update(empleado);
             var resultado = await _context.SaveChangesAsync();
+
 
             return resultado == 1 ? true : false;
         }

@@ -113,9 +113,9 @@ public partial class AutoCareManagerContext : DbContext
 
         modelBuilder.Entity<Servicios>(entity =>
         {
-            entity.HasKey(e => e.IdSercicios).HasName("PK__Servicio__79861A36A69509A1");
+            entity.HasKey(e => e.IdServicios).HasName("PK__Servicio__79861A36A69509A1");
 
-            entity.Property(e => e.IdSercicios).HasColumnName("idSercicios");
+            entity.Property(e => e.IdServicios).HasColumnName("idSercicios");
             entity.Property(e => e.Codigo)
                 .HasMaxLength(10)
                 .IsUnicode(false)

@@ -1,5 +1,6 @@
-﻿using AutoCareManagerAPI.Entities;
-using AutoCareManagerAPI.Interfaces;
+﻿using AutoCareManagerDOMAIN.Entities;
+using AutoCareManagerDOMAIN.Infraestructure.Data;
+using AutoCareManagerDOMAIN.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ namespace AutoCareManagerDOMAIN.Infraestructure.Repositories
     public class ClientesRepository : IClientes
     {
         private readonly AutoCareManagerContext _context;
+        private readonly IClientes _cliente;
 
         public ClientesRepository(AutoCareManagerContext context)
         {

@@ -34,79 +34,79 @@ namespace AutoCareManagerAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Empleado>> GetEmpleado(int id)
         {
-          if (_context.Empleado == null)
-          {
-              return NotFound();
-          }
-            var empleado = await _context.Empleado.FindAsync(id);
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            var empleado = await _empleado.GetEmpleadoId(id);
 
             if (empleado == null)
             {
                 return NotFound();
             }
 
-            return empleado;
+            return Ok(empleado);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmpleado(int id, Empleado empleado)
+        public async Task<IActionResult> PutEmpleado(Empleado empleado)
         {
-            if (id != empleado.IdEmpleado)
+            if (empleado != null)
             {
                 return BadRequest();
             }
 
-            _context.Entry(empleado).State = EntityState.Modified;
+            var resultado = await _empleado.PutEmpleado(empleado);
 
-            try
+            if (resultado == true)
             {
-                await _context.SaveChangesAsync();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!EmpleadoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
 
-            return NoContent();
         }
 
         [HttpPost]
         public async Task<ActionResult<Empleado>> PostEmpleado(Empleado empleado)
         {
-          if (_context.Empleado == null)
-          {
-              return Problem("Entity set 'AutoCareManagerContext.Empleado'  is null.");
-          }
-            _context.Empleado.Add(empleado);
-            await _context.SaveChangesAsync();
+            if (empleado == null)
+            {
+                return Problem("No se puede agregar un empleado vacio");
+            }
 
-            return CreatedAtAction("GetEmpleado", new { id = empleado.IdEmpleado }, empleado);
+            var resultado = await _empleado.PostEmpleado(empleado);
+
+            if (resultado == true)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmpleado(int id)
         {
-            if (_context.Empleado == null)
+            if (id == 0)
             {
                 return NotFound();
             }
-            var empleado = await _context.Empleado.FindAsync(id);
-            if (empleado == null)
+            var resultado = await _empleado.DeleteEmpleado(id);
+
+            if (resultado == true)
             {
-                return NotFound();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
             }
 
-            _context.Empleado.Remove(empleado);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
     }
 }

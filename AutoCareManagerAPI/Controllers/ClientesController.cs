@@ -113,5 +113,7 @@ namespace AutoCareManagerAPI.Controllers
         {
             return (_context.Cliente?.Any(e => e.IdCliente == id)).GetValueOrDefault();
         }
+
+        
     }
 }
