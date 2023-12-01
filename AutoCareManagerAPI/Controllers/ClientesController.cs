@@ -28,7 +28,16 @@ namespace AutoCareManagerAPI.Controllers
           {
               return NotFound();
           }
-            return await _context.Cliente.ToListAsync();
+            try
+            {
+                return await _context.Cliente.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
         }
 
         [HttpGet("{id}")]
@@ -48,10 +57,10 @@ namespace AutoCareManagerAPI.Controllers
             return cliente;
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        [HttpPut]
+        public async Task<IActionResult> PutCliente(Cliente cliente)
         {
-            if (id != cliente.IdCliente)
+            if (cliente == null)
             {
                 return BadRequest();
             }
@@ -64,17 +73,12 @@ namespace AutoCareManagerAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                
+                return NotFound();
+                
             }
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpPost]

@@ -8,12 +8,10 @@ namespace AutoCareManagerDOMAIN.Core.DTO
 {
     public class RegisterEmpleadoDTO
     {
-
         public string Nombre { get; set;}
 
         public string Apellido { get; set;} 
 
         public string Cargo { get; set;}
-
     }
 }

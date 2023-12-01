@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutoCareManagerDOMAIN.Core.Entities;
 using AutoCareManagerDOMAIN.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,18 +18,13 @@ public partial class AutoCareManagerContext : DbContext
     }
 
     public virtual DbSet<Cliente> Cliente { get; set; }
-
     public virtual DbSet<Configuracion> Configuracion { get; set; }
-
     public virtual DbSet<Empleado> Empleado { get; set; }
-
     public virtual DbSet<ServicioRealizados> ServicioRealizados { get; set; }
-
     public virtual DbSet<Servicios> Servicios { get; set; }
-
     public virtual DbSet<Usuario> Usuario { get; set; }
-
     public virtual DbSet<Vehiculo> Vehiculo { get; set; }
+    public virtual DbSet<Repuesto> Repuesto { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -96,19 +92,16 @@ public partial class AutoCareManagerContext : DbContext
 
         modelBuilder.Entity<ServicioRealizados>(entity =>
         {
-            entity.HasKey(e => e.IdServicio).HasName("PK__Servicio__CEB981194A13E8CE");
+            entity.HasKey(e => e.IdServicioRealizado).HasName("PK__Servicio__CEB981194A13E8CE");
 
             entity.Property(e => e.IdServicio).HasColumnName("idServicio");
-            entity.Property(e => e.Codigo)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("codigo");
+           
             entity.Property(e => e.Fecha)
                 .HasColumnType("datetime")
                 .HasColumnName("fecha");
             entity.Property(e => e.IdCliente).HasColumnName("idCliente");
             entity.Property(e => e.IdVehiculo).HasColumnName("idVehiculo");
-            entity.Property(e => e.Servicio1).HasColumnName("Servicio");
+            entity.Property(e => e.IdServicio).HasColumnName("idServicio");
         });
 
         modelBuilder.Entity<Servicios>(entity =>
@@ -172,6 +165,23 @@ public partial class AutoCareManagerContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("placa");
         });
+
+        modelBuilder.Entity<Repuesto>(entity =>
+        {
+            entity.HasKey(e => e.IdRepuesto).HasName("PK__Vehiculo__4868297049555B20");
+
+            entity.Property(e => e.IdRepuesto).HasColumnName("idRepuesto");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("descripcion");
+            entity.Property(e => e.Costo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("costo");
+        });
+
+
 
         OnModelCreatingPartial(modelBuilder);
     }

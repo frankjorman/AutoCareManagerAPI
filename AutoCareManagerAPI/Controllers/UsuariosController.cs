@@ -51,8 +51,6 @@ namespace AutoCareManagerAPI.Controllers
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignIn([FromBody] UsuarioAuthDTO userAuthDTO)
         {
-
-
             var c = new Usuario
             {
                 Username = userAuthDTO.Username,
@@ -65,7 +63,6 @@ namespace AutoCareManagerAPI.Controllers
                 return BadRequest("Credenciales inválidas");
 
             return Ok(result);
-
         }
     }
 }

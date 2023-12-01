@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoCareManagerDOMAIN.Entities;
 using AutoCareManagerDOMAIN.Infraestructure.Data;
 using AutoCareManagerDOMAIN.Core.Interfaces;
+using System.Text.Json;
 
 namespace AutoCareManagerAPI.Controllers
 {
@@ -49,9 +50,10 @@ namespace AutoCareManagerAPI.Controllers
             return Ok(empleado);
         }
 
+        [HttpPut]
         public async Task<IActionResult> PutEmpleado(Empleado empleado)
         {
-            if (empleado != null)
+            if (empleado == null)
             {
                 return BadRequest();
             }

@@ -32,7 +32,7 @@ namespace AutoCareManagerAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServicioRealizados>> GetServicioRealizados(int id)
+        public async Task<ActionResult<ServicioRealizados>> GetServicioRealizados(int  id)
         {
           if (_context.ServicioRealizados == null)
           {
@@ -84,8 +84,17 @@ namespace AutoCareManagerAPI.Controllers
           {
               return Problem("Entity set 'AutoCareManagerContext.ServicioRealizados'  is null.");
           }
-            _context.ServicioRealizados.Add(servicioRealizados);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.ServicioRealizados.Add(servicioRealizados);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
 
             return CreatedAtAction("GetServicioRealizados", new { id = servicioRealizados.IdServicio }, servicioRealizados);
         }
